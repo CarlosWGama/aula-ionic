@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -7,19 +8,26 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
-  login: {email:string, senha:string} = {email: 'carlos', senha: '123456'};
   msg;
+  formulario: FormGroup;
 
-  constructor() { }
+  constructor(private formBuilder:FormBuilder) { }
 
   ngOnInit() {
+    this.formulario = this.formBuilder.group({
+      email:['', [Validators.email, Validators.required]],
+      senha:['', [Validators.required, Validators.minLength(6)]]
+    });
   }
 
   clicou() {
-    if (this.login.email == 'teste@teste.com' && this.login.senha == '123456')
-      this.msg = "Sucesso";
-    else
+    if (this.formulario.valid && 
+        this.formulario.get('email').value == "teste@teste.com" &&
+        this.formulario.get('senha').value == "123456")
+        this.msg = "Sucesso";
+    else  
       this.msg = "Email ou senha incorreta";
+       
   }
 
 }
