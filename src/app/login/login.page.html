@@ -1,24 +1,25 @@
 <ion-content padding>
 
-  <h1 id="titulo">Lista de Tarefas</h1>
+  <h1 id="titulo">Lista de Tarefas </h1>
   <!-- FORMULÁRIO -->
   <ion-list>
     <!-- EMAIL -->
     <ion-item>
       <ion-label position="floating">E-mail</ion-label>
-      <ion-input type="email"></ion-input>
+      <ion-input type="email" [(ngModel)]="login.email" ></ion-input>
     </ion-item>
     <!-- SENHA -->
     <ion-item>
       <ion-label position="floating">Senha</ion-label>
-      <ion-input type="password"></ion-input>
+      <ion-input type="password" [(ngModel)]="login.senha"></ion-input>
     </ion-item>
   </ion-list>
 
   <!-- LOGAR -->
-  <ion-button shape="round" expand="full" color="light"> 
+  <ion-button shape="round" expand="full" color="light" (click)="clicou()"> 
     Logar 
   </ion-button> 
+  <p id="alerta">{{ msg }}</p>
 
   <!-- CADASTRAR -->
   <p id="cadastre-se">Não possui conta? Clique aqui para cadastrar-se</p>
