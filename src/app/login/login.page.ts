@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, MenuController } from '@ionic/angular';
 import { AutenticacaoGuard } from '../guards/autenticacao.guard';
 
 @Component({
@@ -14,9 +14,14 @@ export class LoginPage implements OnInit {
   msg;
   formulario: FormGroup;
 
-  constructor(private formBuilder:FormBuilder, private router:Router) { }
+  constructor(private formBuilder:FormBuilder, private router:Router, private menuCtrl:MenuController) { }
+
+  ionViewWillEnter() {
+    this.menuCtrl.enable(false);
+  }
 
   ngOnInit() {
+    
     this.formulario = this.formBuilder.group({
       email:['', [Validators.email, Validators.required]],
       senha:['', [Validators.required, Validators.minLength(6)]]

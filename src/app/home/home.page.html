@@ -1,12 +1,35 @@
 <ion-header>
   <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
     <ion-title>
-      Ionic Blank
+      Home
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+<ion-content>
+  
+  <h3 *ngIf="tarefas.length == 0">Você ainda não possui tarefas cadastradas</h3>
+
+  <ion-list>
+    <!-- ITEM -->
+    <ion-item-sliding *ngFor="let tarefa of tarefas">
+      <!-- DESCRIÇÃO -->
+      <ion-item>
+        <ion-label>{{ tarefa.descricao }}</ion-label>
+      </ion-item>
+
+      <!-- OPÇÕES  DO ITEM -->
+      <ion-item-options side="end">
+        <ion-item-option color="primary" (click)="editar(tarefa.id)">Editar</ion-item-option>
+        <ion-item-option color="danger" (click)="excluir(tarefa.id)">Excluir</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    <!-- ITEM [FIM] -->
+  </ion-list>
+
 </ion-content>

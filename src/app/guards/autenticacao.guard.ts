@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AutenticacaoGuard implements CanActivate {
 
-  public static podeAcessar = false;
+  public static podeAcessar = true;
 
   canActivate(
     next: ActivatedRouteSnapshot,

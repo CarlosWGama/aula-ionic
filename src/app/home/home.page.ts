@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Tarefa } from '../models/tarefa';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -7,4 +9,29 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
+  public tarefas: Tarefa[] = [
+    new Tarefa(1, "Teste 1", "2030-12-31"),
+    new Tarefa(2, "Teste 2", "2018-01-01")
+  ];
+
+  public constructor(private menuCtrl:MenuController) {}
+
+
+  ionViewWillEnter() {
+    this.menuCtrl.enable(true);
+  }
+
+  /** Permite abrir a tela de edição de tarefa
+   * @param id id da tarefa
+   */
+  editar(id: number) {
+    
+  }
+
+  /** Permite excluir uma tarefa da lista
+   * @param id id da tarefa
+   */
+  excluir(id:number) {
+
+  }
 }
