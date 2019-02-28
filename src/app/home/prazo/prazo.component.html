@@ -1,0 +1,3 @@
+<p class="em-dia" *ngIf="status == -1"> Em dia, faltam {{ dias}} dias </p>
+<p class="hoje" *ngIf="status == 0"> Hoje! </p>
+<p class="atrasado" *ngIf="status == 1"> Atrasado em {{ dias }} dias </p>

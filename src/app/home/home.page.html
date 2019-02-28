@@ -21,6 +21,8 @@
       <!-- DESCRIÇÃO -->
       <ion-item>
         <ion-label>{{ tarefa.descricao }}</ion-label>
+        <app-prazo [prazo]="tarefa.data"></app-prazo>
+        <p>{{ tarefa.data }}</p>
       </ion-item>
 
       <!-- OPÇÕES  DO ITEM -->
