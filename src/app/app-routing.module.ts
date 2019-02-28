@@ -5,8 +5,8 @@ import { AutenticacaoGuard } from './guards/autenticacao.guard';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule', canActivate:[AutenticacaoGuard] },
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },  { path: 'configuracoes', loadChildren: './configuracoes/configuracoes.module#ConfiguracoesPageModule' },
-
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: '', loadChildren: './configuracoes/configuracoes.module#ConfiguracoesPageModule' },
 ];
 
 @NgModule({

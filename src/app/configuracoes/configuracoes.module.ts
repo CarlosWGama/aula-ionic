@@ -9,8 +9,13 @@ import { ConfiguracoesPage } from './configuracoes.page';
 
 const routes: Routes = [
   {
-    path: '',
-    component: ConfiguracoesPage
+    path: 'configuracoes',
+    component: ConfiguracoesPage,
+    children: [
+      { path: '', redirectTo: '/configuracoes/geral', pathMatch: 'full' },
+      { path: 'geral', loadChildren: './geral/geral.module#GeralPageModule' },
+      { path: 'info', loadChildren: './info/info.module#InfoPageModule' },
+    ]
   }
 ];
 
