@@ -6,12 +6,15 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { PrazoComponent } from './prazo/prazo.component';
+import { PipesModule } from '../pipes/pipes.module';
+import { PrazoBackgroundDirective } from './prazo-background.directive';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     RouterModule.forChild([
       {
         path: '',
@@ -19,6 +22,6 @@ import { PrazoComponent } from './prazo/prazo.component';
       }
     ])
   ],
-  declarations: [HomePage, PrazoComponent]
+  declarations: [HomePage, PrazoComponent, PrazoBackgroundDirective]
 })
 export class HomePageModule {}

@@ -19,10 +19,10 @@
     <!-- ITEM -->
     <ion-item-sliding *ngFor="let tarefa of tarefas">
       <!-- DESCRIÇÃO -->
-      <ion-item>
+      <ion-item [appPrazoBackground]="tarefa.data">
         <ion-label>{{ tarefa.descricao }}</ion-label>
         <app-prazo [prazo]="tarefa.data"></app-prazo>
-        <p>{{ tarefa.data }}</p>
+        <p>{{ tarefa.data | dataBrasil:'teste' }}</p>
       </ion-item>
 
       <!-- OPÇÕES  DO ITEM -->
