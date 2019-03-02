@@ -1,12 +1,12 @@
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label>Idioma</ion-label>
+      <ion-label>{{ 'LANGUAGES' | translate }}</ion-label>
       <ion-select [(ngModel)]="idioma" placeholder="Idioma">
         <ion-select-option *ngFor="let i of idiomas" [value]="i.sigla">{{ i.idioma }}</ion-select-option>
       </ion-select>
     </ion-item>
   </ion-list>
-  <ion-button (click)="salvar()" expand="block" color="secondary"> Salvar </ion-button>
+  <ion-button (click)="salvar()" expand="block" color="secondary"> {{ 'SAVE' | translate }} </ion-button>
 </ion-content>
   
