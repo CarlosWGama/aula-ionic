@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title *ngIf="tarefa.id != null">Tarefa Edicao</ion-title>
+    <ion-title *ngIf="tarefa.id == null">Nova Tarefa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Descrição</ion-label>
+      <ion-input [(ngModel)]="tarefa.descricao" type="text" text-right></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Data</ion-label>
+      <ion-datetime display-format="DD/MM/YYYY" [(ngModel)]="tarefa.data"></ion-datetime>
+    </ion-item>
+  </ion-list>
+  <ion-img [src]="tarefa.imagem" (click)="tirarFoto()" class="tarefa-imagem"></ion-img>
+  <ion-button (click)="salvar()" expand="full"> Salvar </ion-button>
+
+</ion-content>

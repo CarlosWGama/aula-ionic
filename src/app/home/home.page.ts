@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Tarefa } from '../models/tarefa';
 import { MenuController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomePage {
     new Tarefa(2, "Teste 2", "2018-01-01")
   ];
 
-  public constructor(private menuCtrl:MenuController) {}
+  public constructor(private menuCtrl:MenuController, private router:Router) {}
 
 
   ionViewWillEnter() {
@@ -25,7 +26,7 @@ export class HomePage {
    * @param id id da tarefa
    */
   editar(id: number) {
-    
+    this.router.navigate(['/tarefa-edicao', id]);
   }
 
   /** Permite excluir uma tarefa da lista

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuController, ToastController, AlertController } from '@ionic/angular';
 import { AutenticacaoGuard } from '../guards/autenticacao.guard';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginPage implements OnInit {
   formulario: FormGroup;
 
   constructor(private formBuilder:FormBuilder, private router:Router, private menuCtrl:MenuController, 
-              private toastController: ToastController, private alertController:AlertController) { }
+              private toastController: ToastController, private alertController:AlertController, private storage:Storage) { }
 
   /**
    * Função que é chamada sempre que a página é exibida e fará o papel de desabilitar o menu
@@ -40,7 +41,8 @@ export class LoginPage implements OnInit {
     if (this.formulario.valid && 
         this.formulario.get('email').value == "teste@teste.com" &&
         this.formulario.get('senha').value == "123456") {
-          AutenticacaoGuard.podeAcessar = true;
+          this.storage.set('podeAcessar', true);
+          //AutenticacaoGuard.podeAcessar = true;
           this.router.navigateByUrl('home');
     } else {  
       const toast = await this.toastController.create({

@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { AutenticacaoGuard } from './guards/autenticacao.guard';
 
 @Component({
   selector: 'app-root',
@@ -43,6 +44,8 @@ export class AppComponent {
   }
 
   sair() {
+    AutenticacaoGuard.podeAcessar = false;
+    this.storage.set('podeAcessar', false);
     this.router.navigateByUrl('/login');
   }
 }

@@ -27,11 +27,18 @@
 
       <!-- OPÇÕES  DO ITEM -->
       <ion-item-options side="end">
-        <ion-item-option color="primary" (click)="editar(tarefa.id)">Editar</ion-item-option>
+        <ion-item-option color="primary" (click)="editar(tarefa.id)"> Editar </ion-item-option>
         <ion-item-option color="danger" (click)="excluir(tarefa.id)">Excluir</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
     <!-- ITEM [FIM] -->
   </ion-list>
+
+  <!-- ADICIONAR NOVA TAREFA -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="danger"  routerLink="/nova-tarefa">
+      <ion-icon name="add" ></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>
