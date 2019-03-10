@@ -1,7 +1,8 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { Tarefa } from '../models/tarefa';
-import { MenuController } from '@ionic/angular';
+import { MenuController, IonItemSliding } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { TarefaService } from '../services/tarefa.service';
 
 @Component({
   selector: 'app-home',
@@ -10,22 +11,25 @@ import { Router } from '@angular/router';
 })
 export class HomePage {
 
-  public tarefas: Tarefa[] = [
-    new Tarefa(1, "Teste 1", "2030-12-31"),
-    new Tarefa(2, "Teste 2", "2018-01-01")
-  ];
+  public tarefas: Tarefa[] = [];
 
-  public constructor(private menuCtrl:MenuController, private router:Router) {}
+  @ViewChild('slidingItem')
+  public slidingItem: IonItemSliding;
+
+  public constructor(private menuCtrl:MenuController, private router:Router,
+      private tarefaService:TarefaService) {}
 
 
   ionViewWillEnter() {
     this.menuCtrl.enable(true);
+    this.tarefaService.getAll().then(tarefas => this.tarefas = tarefas);
   }
 
   /** Permite abrir a tela de edição de tarefa
    * @param id id da tarefa
    */
   editar(id: number) {
+    this.slidingItem.close();
     this.router.navigate(['/tarefa-edicao', id]);
   }
 
@@ -33,6 +37,8 @@ export class HomePage {
    * @param id id da tarefa
    */
   excluir(id:number) {
-
+    this.slidingItem.close();
+    this.tarefaService.delete(id);
+    this.tarefaService.getAll().then(r => this.tarefas = r);
   }
 }

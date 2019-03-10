@@ -8,6 +8,7 @@ import { HomePage } from './home.page';
 import { PrazoComponent } from './prazo/prazo.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { PrazoBackgroundDirective } from './prazo-background.directive';
+import { ServicesModule } from '../services/services.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { PrazoBackgroundDirective } from './prazo-background.directive';
     FormsModule,
     IonicModule,
     PipesModule,
+    ServicesModule,
     RouterModule.forChild([
       {
         path: '',

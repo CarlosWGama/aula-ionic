@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MenuController, ToastController, AlertController } from '@ionic/angular';
 import { AutenticacaoGuard } from '../guards/autenticacao.guard';
 import { Storage } from '@ionic/storage';
+import { UsuarioService } from '../services/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginPage implements OnInit {
   formulario: FormGroup;
 
   constructor(private formBuilder:FormBuilder, private router:Router, private menuCtrl:MenuController, 
-              private toastController: ToastController, private alertController:AlertController, private storage:Storage) { }
+              private toastController: ToastController, private alertController:AlertController,
+              private storage:Storage, private usuarioService:UsuarioService) { }
 
   /**
    * Função que é chamada sempre que a página é exibida e fará o papel de desabilitar o menu
@@ -37,16 +39,16 @@ export class LoginPage implements OnInit {
   }
 
   /** Função que é executada ao clicar no botão de login */
-  async clicou() {
-    if (this.formulario.valid && 
-        this.formulario.get('email').value == "teste@teste.com" &&
-        this.formulario.get('senha').value == "123456") {
+  async logar() {
+    let logou = await this.usuarioService.logar(this.formulario.get('email').value, this.formulario.get('senha').value);
+    
+    if (logou) {
           this.storage.set('podeAcessar', true);
           //AutenticacaoGuard.podeAcessar = true;
           this.router.navigateByUrl('home');
     } else {  
       const toast = await this.toastController.create({
-        message: 'Email ou Senha incorreta',
+        message: 'Email ou senha inválida',
         duration: 3000
       });
       toast.present();
@@ -64,8 +66,11 @@ export class LoginPage implements OnInit {
       buttons: [
         'Cancelar',
         {text: "Cadastrar", handler: (data) => {
-          console.log("Campo login: " + data.login);
-          console.log("Campo senha: " + data.senha);
+          this.usuarioService.cadastrar(data.login, data.senha);
+          this.toastController.create({
+            message: 'Conta ' + data.login + ' criada',
+            duration: 2000
+          }).then(toast => toast.present())
         }}
       ]
     });
