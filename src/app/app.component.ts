@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AutenticacaoGuard } from './guards/autenticacao.guard';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,17 @@ export class AppComponent {
   }
 
   initializeApp() {
+
+    var config = {
+      apiKey: "AIzaSyCDqqEdFhVbyhG2nQPIXM55rpijnhBN7Z4",
+      authDomain: "cesmac-6f9ef.firebaseapp.com",
+      databaseURL: "https://cesmac-6f9ef.firebaseio.com",
+      projectId: "cesmac-6f9ef",
+      storageBucket: "cesmac-6f9ef.appspot.com",
+      messagingSenderId: "346552590038"
+    };
+    firebase.initializeApp(config);
+
     this.platform.ready().then(() => {
       this.translate.setDefaultLang(navigator.language);
       this.storage.get("idioma").then(idioma => {
@@ -44,8 +56,7 @@ export class AppComponent {
   }
 
   sair() {
-    AutenticacaoGuard.podeAcessar = false;
-    this.storage.set('podeAcessar', false);
+    firebase.auth().signOut();
     this.router.navigateByUrl('/login');
   }
 }
