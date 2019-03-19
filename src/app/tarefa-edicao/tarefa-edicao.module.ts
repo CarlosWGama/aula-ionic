@@ -6,6 +6,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { IonicModule } from '@ionic/angular';
 
 import { TarefaEdicaoPage } from './tarefa-edicao.page';
+import { ServicesModule } from '../services/services.module';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    ServicesModule,
     RouterModule.forChild(routes)
   ],
   providers: [Camera],

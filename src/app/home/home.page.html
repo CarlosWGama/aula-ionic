@@ -17,7 +17,7 @@
 
   <ion-list>
     <!-- ITEM -->
-    <ion-item-sliding *ngFor="let tarefa of tarefas">
+    <ion-item-sliding #ionItemSliding *ngFor="let tarefa of tarefas">
       <!-- DESCRIÇÃO -->
       <ion-item [appPrazoBackground]="tarefa.data">
         <ion-label>{{ tarefa.descricao }}</ion-label>

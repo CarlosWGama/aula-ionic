@@ -3,6 +3,7 @@ import { Tarefa } from '../models/tarefa';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Camera } from '@ionic-native/camera/ngx';
+import { TarefasService } from '../services/tarefas.service';
 
 @Component({
   selector: 'app-tarefa-edicao',
@@ -13,14 +14,14 @@ export class TarefaEdicaoPage implements OnInit {
 
   tarefa: Tarefa;
 
-
   constructor(private activitedRouted:ActivatedRoute, 
               private router: Router, private toastController:ToastController,
-              private camera:Camera) { }
+              private camera:Camera, private tarefasService:TarefasService) { }
 
   ngOnInit() {
-    if (this.activitedRouted.snapshot.params['id'])
-      this.tarefa = new Tarefa(this.activitedRouted.snapshot.params['id'], 'teste', '2023-01-01');
+    if (this.activitedRouted.snapshot.params['id']) 
+      this.tarefasService.buscar(this.activitedRouted.snapshot.params['id'])
+            .then(tarefa => this.tarefa = tarefa);
     else 
       this.tarefa = new Tarefa();
   }
@@ -41,6 +42,11 @@ export class TarefaEdicaoPage implements OnInit {
   }
 
   salvar() {
+    if (this.tarefa.id == null) //Cadastra
+      this.tarefasService.cadastrar(this.tarefa);
+    else //Atualiza
+      this.tarefasService.editar(this.tarefa);
+
     this.toastController.create({
       message: 'Salvo com sucesso',
       duration: 2000

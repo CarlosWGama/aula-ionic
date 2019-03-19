@@ -1,7 +1,9 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { Tarefa } from '../models/tarefa';
-import { MenuController } from '@ionic/angular';
+import { MenuController, IonItemSliding, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import * as firebase from 'firebase';
+import { TarefasService } from '../services/tarefas.service';
 
 @Component({
   selector: 'app-home',
@@ -10,29 +12,45 @@ import { Router } from '@angular/router';
 })
 export class HomePage {
 
-  public tarefas: Tarefa[] = [
-    new Tarefa(1, "Teste 1", "2030-12-31"),
-    new Tarefa(2, "Teste 2", "2018-01-01")
-  ];
+  @ViewChild('ionItemSliding')
+  ionItemSliding:IonItemSliding;
 
-  public constructor(private menuCtrl:MenuController, private router:Router) {}
+  public tarefas: Tarefa[] = [];
+
+  public constructor(private menuCtrl:MenuController, private router:Router, 
+                      private tarefasService: TarefasService, private loadingController:LoadingController) {}
 
 
   ionViewWillEnter() {
     this.menuCtrl.enable(true);
+    this.atualizaTarefas();
   }
 
   /** Permite abrir a tela de edição de tarefa
    * @param id id da tarefa
    */
-  editar(id: number) {
+  editar(id: string) {
+    this.ionItemSliding.closeOpened();
     this.router.navigate(['/tarefa-edicao', id]);
   }
 
   /** Permite excluir uma tarefa da lista
    * @param id id da tarefa
    */
-  excluir(id:number) {
+  excluir(id:string) {
+    this.tarefasService.excluir(id);
+    this.atualizaTarefas();
+  }
 
+  /** Atualiza lista de tarefas */
+  private async atualizaTarefas() {
+    const loading = await this.loadingController.create({
+      message: "Buscando tarefas..."
+    });
+    loading.present();
+    this.tarefasService.buscarTodos().then(tarefas => {
+      this.tarefas = tarefas
+      loading.dismiss();
+    });
   }
 }

@@ -19,7 +19,7 @@
     </ion-item>
     <ion-item>
       <ion-label>Data</ion-label>
-      <ion-datetime display-format="DD/MM/YYYY" [(ngModel)]="tarefa.data"></ion-datetime>
+      <ion-datetime display-format="DD/MM/YYYY" max="2030-01-01" [(ngModel)]="tarefa.data"></ion-datetime>
     </ion-item>
   </ion-list>
   <ion-img [src]="tarefa.imagem" (click)="tirarFoto()" class="tarefa-imagem"></ion-img>
