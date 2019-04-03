@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Tarefa } from '../models/tarefa';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-tarefa-edicao',
@@ -13,7 +14,8 @@ export class TarefaEdicaoPage implements OnInit {
   tarefa: Tarefa;
 
 
-  constructor(private activitedRouted:ActivatedRoute, private router: Router, private toastController:ToastController) {   
+  constructor(private activitedRouted:ActivatedRoute, private router: Router,
+      private toastController:ToastController, private camera: Camera) {   
   }
 
   ngOnInit() {
@@ -24,7 +26,17 @@ export class TarefaEdicaoPage implements OnInit {
   }
 
   tirarFoto() {
-    this.tarefa.imagem = "/assets/imgs/camera_on.png";
+    
+    this.camera.getPicture({
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }).then((imageData) => {
+      this.tarefa.imagem = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      alert(err);
+    });
   }
 
   salvar() {
