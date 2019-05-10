@@ -12,7 +12,7 @@ import { TarefasService } from '../services/tarefas.service';
 })
 export class TarefaEdicaoPage implements OnInit {
 
-  tarefa: Tarefa;
+  tarefa: Tarefa = new Tarefa();
 
   constructor(private activitedRouted:ActivatedRoute, 
               private router: Router, private toastController:ToastController,

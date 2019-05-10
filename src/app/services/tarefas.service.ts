@@ -8,11 +8,12 @@ export class TarefasService {
 
   
 
-  private db: firebase.database.Reference;
+  private db: firebase.firestore.CollectionReference;
+  private userID;
 
   constructor() {
-    let userID = firebase.auth().currentUser.uid;
-    this.db = firebase.database().ref('tarefas').child(userID);
+    this.userID = firebase.auth().currentUser.uid;
+    this.db = firebase.firestore().collection('tarefas');
   }
 
   /**
@@ -20,10 +21,23 @@ export class TarefasService {
    * @param tarefa 
    */
   cadastrar(tarefa: Tarefa) {
-    let uid = this.db.push().key;
-    tarefa.id = uid;
-    this.db.child(uid).set(tarefa);
+    let doc = this.db.doc();
+    tarefa.id = doc.id;
+    tarefa.usuarioID = this.userID;
+    let obj = this.castObject(tarefa);
+    doc.set(obj);
+    
+    //Ou
+    // this.db.add(tarefa).then(doc => {
+    //   tarefa.id = doc.id;
+    //   doc.update({id:doc.id});
+    // })
+  }
 
+  private castObject(classe: any): Object {
+    let objeto = {};
+    Object.keys(classe).forEach(chave => objeto[chave] = classe[chave]);
+    return objeto;
   }
 
   /**
@@ -31,7 +45,7 @@ export class TarefasService {
    * @param tarefa 
    */
   editar(tarefa: Tarefa) {
-    this.db.child(tarefa.id).set(tarefa);
+    this.db.doc(tarefa.id).set(tarefa);
   }
 
   /**
@@ -39,17 +53,17 @@ export class TarefasService {
    * @param id 
    */
   excluir (id: string) {
-    this.db.child(id).remove();
+    this.db.doc(id).delete();
   }
 
   /**
    * BUsca todas tarefas de um usuário
    */
   async buscarTodos(): Promise<Tarefa[]> {
-    return this.db.once('value').then(snapshot => {
+    return this.db.where('usuarioID', '==', this.userID).get().then(snapshot => {
       let tarefas = [];
-      snapshot.forEach(tarefa => {
-        tarefas.push(tarefa.val());
+      snapshot.forEach(doc => {
+        tarefas.push(doc.data());
       })
 
       return tarefas;
@@ -61,10 +75,10 @@ export class TarefasService {
    * @param id 
    */
   async buscar(id: string): Promise<Tarefa> {
-    return this.db.child(id).once('value').then(snapshot => {
-      if (snapshot.exists())
-        return snapshot.val();
-      return null;
+    return this.db.where('id', '==', id).where('usuarioID', '==', this.userID).get().then(snapshot => {
+      let tarefa = null;
+      snapshot.forEach(doc => tarefa = doc.data());
+      return tarefa;
     });
   }
 }
